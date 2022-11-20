@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CourseDao">
+
+    <resultMap type="entity.Course" id="CourseMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+        <result property="brief" column="brief" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="INTEGER"/>
+        <result property="priceTag" column="price_tag" jdbcType="VARCHAR"/>
+        <result property="discounts" column="discounts" jdbcType="INTEGER"/>
+        <result property="discountsTag" column="discounts_tag" jdbcType="VARCHAR"/>
+        <result property="courseDescriptionMarkDown" column="course_description_mark_down" jdbcType="VARCHAR"/>
+        <result property="courseImgUrl" column="course_img_url" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="courseListImg" column="course_list_img" jdbcType="VARCHAR"/>
+        <result property="sortNum" column="sort_num" jdbcType="INTEGER"/>
+        <result property="previewFirstField" column="preview_first_field" jdbcType="VARCHAR"/>
+        <result property="previewSecondField" column="preview_second_field" jdbcType="VARCHAR"/>
+        <result property="sales" column="sales" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+
+        <association property="activityCourse" javaType="entity.ActivityCourse">
+            <result property="id" column="id" jdbcType="INTEGER"/>
+            <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="beginTime" column="begin_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+            <result property="amount" column="amount" jdbcType="INTEGER"/>
+            <result property="stock" column="stock" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        </association>
+
+        <association property="teacher" javaType="entity.Teacher">
+            <result property="id" column="id" jdbcType="INTEGER"/>
+            <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="position" column="position" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+        </association>
+
+        <collection property="courseSections" ofType="entity.CourseSection">
+            <result property="id" column="id" jdbcType="INTEGER"/>
+            <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="sectionName" column="section_name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="lastOperator" column="last_operator" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isVisible" column="is_visible" jdbcType="INTEGER"/>
+            <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+            <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+            <result property="lastOperatorId" column="last_operator_id" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+
+            <collection property="courseLessons" ofType="entity.CourseLesson">
+                <result property="id" column="id" jdbcType="INTEGER"/>
+                <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+                <result property="sectionId" column="section_id" jdbcType="INTEGER"/>
+                <result property="theme" column="theme" jdbcType="VARCHAR"/>
+                <result property="duration" column="duration" jdbcType="INTEGER"/>
+                <result property="isFree" column="is_free" jdbcType="INTEGER"/>
+                <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+                <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+                <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+                <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+                <result property="status" column="status" jdbcType="INTEGER"/>
+
+                <association property="courseMedia" javaType="entity.CourseMedia">
+                    <result property="id" column="id" jdbcType="INTEGER"/>
+                    <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+                    <result property="sectionId" column="section_id" jdbcType="INTEGER"/>
+                    <result property="lessonId" column="lesson_id" jdbcType="INTEGER"/>
+                    <result property="channel" column="channel" jdbcType="INTEGER"/>
+                    <result property="mediaType" column="media_type" jdbcType="INTEGER"/>
+                    <result property="coverImageUrl" column="cover_image_url" jdbcType="VARCHAR"/>
+                    <result property="duration" column="duration" jdbcType="VARCHAR"/>
+                    <result property="fileId" column="file_id" jdbcType="VARCHAR"/>
+                    <result property="fileUrl" column="file_url" jdbcType="VARCHAR"/>
+                    <result property="fileEdk" column="file_edk" jdbcType="VARCHAR"/>
+                    <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+                    <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+                    <result property="fileDk" column="file_dk" jdbcType="VARCHAR"/>
+                    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+                    <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+                    <result property="status" column="status" jdbcType="INTEGER"/>
+                    <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+                    <result property="lastOperatorId" column="last_operator_id" jdbcType="INTEGER"/>
+                    <result property="durationNum" column="duration_num" jdbcType="INTEGER"/>
+                </association>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="queryAll" resultMap="CourseMap">
+        select course.id, course.course_name, teacher_name, stock, course_section.section_name, course_lesson.theme, file_name
+        from activity_course right join course on activity_course.course_id = course.id
+                             left join teacher on course.id = teacher.course_id
+                             left join course_section on course.id = course_section.course_id
+                             left join course_lesson on course.id = course_lesson.course_id
+                             left join course_media on course.id = course_media.course_id
+        order by stock desc
+    </select>
+
+
+</mapper>
+

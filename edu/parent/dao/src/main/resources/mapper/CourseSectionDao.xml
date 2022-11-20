@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CourseSectionDao">
+
+    <resultMap type="entity.CourseSection" id="CourseSectionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+        <result property="sectionName" column="section_name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="lastOperator" column="last_operator" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isVisible" column="is_visible" jdbcType="INTEGER"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+        <result property="lastOperatorId" column="last_operator_id" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CourseSectionMap">
+        select
+          id, course_id, section_name, description, last_operator, create_time, update_time, is_visible, is_del, order_num, last_operator_id, status
+        from course_section
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CourseSectionMap">
+        select
+          id, course_id, section_name, description, last_operator, create_time, update_time, is_visible, is_del, order_num, last_operator_id, status
+        from course_section
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="courseId != null">
+                and course_id = #{courseId}
+            </if>
+            <if test="sectionName != null and sectionName != ''">
+                and section_name = #{sectionName}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="lastOperator != null and lastOperator != ''">
+                and last_operator = #{lastOperator}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isVisible != null">
+                and is_visible = #{isVisible}
+            </if>
+            <if test="isDel != null">
+                and is_del = #{isDel}
+            </if>
+            <if test="orderNum != null">
+                and order_num = #{orderNum}
+            </if>
+            <if test="lastOperatorId != null">
+                and last_operator_id = #{lastOperatorId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from course_section
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="courseId != null">
+                and course_id = #{courseId}
+            </if>
+            <if test="sectionName != null and sectionName != ''">
+                and section_name = #{sectionName}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="lastOperator != null and lastOperator != ''">
+                and last_operator = #{lastOperator}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isVisible != null">
+                and is_visible = #{isVisible}
+            </if>
+            <if test="isDel != null">
+                and is_del = #{isDel}
+            </if>
+            <if test="orderNum != null">
+                and order_num = #{orderNum}
+            </if>
+            <if test="lastOperatorId != null">
+                and last_operator_id = #{lastOperatorId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into course_section(course_id, section_name, description, last_operator, create_time, update_time, is_visible, is_del, order_num, last_operator_id, status)
+        values (#{courseId}, #{sectionName}, #{description}, #{lastOperator}, #{createTime}, #{updateTime}, #{isVisible}, #{isDel}, #{orderNum}, #{lastOperatorId}, #{status})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into course_section(course_id, section_name, description, last_operator, create_time, update_time, is_visible, is_del, order_num, last_operator_id, status)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.courseId}, #{entity.sectionName}, #{entity.description}, #{entity.lastOperator}, #{entity.createTime}, #{entity.updateTime}, #{entity.isVisible}, #{entity.isDel}, #{entity.orderNum}, #{entity.lastOperatorId}, #{entity.status})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into course_section(course_id, section_name, description, last_operator, create_time, update_time, is_visible, is_del, order_num, last_operator_id, status)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.courseId}, #{entity.sectionName}, #{entity.description}, #{entity.lastOperator}, #{entity.createTime}, #{entity.updateTime}, #{entity.isVisible}, #{entity.isDel}, #{entity.orderNum}, #{entity.lastOperatorId}, #{entity.status})
+        </foreach>
+        on duplicate key update
+        course_id = values(course_id),
+        section_name = values(section_name),
+        description = values(description),
+        last_operator = values(last_operator),
+        create_time = values(create_time),
+        update_time = values(update_time),
+        is_visible = values(is_visible),
+        is_del = values(is_del),
+        order_num = values(order_num),
+        last_operator_id = values(last_operator_id),
+        status = values(status)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update course_section
+        <set>
+            <if test="courseId != null">
+                course_id = #{courseId},
+            </if>
+            <if test="sectionName != null and sectionName != ''">
+                section_name = #{sectionName},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="lastOperator != null and lastOperator != ''">
+                last_operator = #{lastOperator},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="isVisible != null">
+                is_visible = #{isVisible},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel},
+            </if>
+            <if test="orderNum != null">
+                order_num = #{orderNum},
+            </if>
+            <if test="lastOperatorId != null">
+                last_operator_id = #{lastOperatorId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from course_section where id = #{id}
+    </delete>
+
+</mapper>
+

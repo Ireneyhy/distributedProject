@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd
+      http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder />
+
+    <!--json转换器-->
+<!--    <mvc:annotation-driven>-->
+<!--        <mvc:message-converters register-defaults="true">-->
+<!--            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">-->
+<!--                <property name="supportedMediaTypes" value="application/json"/>-->
+<!--                <property name="features">-->
+<!--                    <array>-->
+<!--                        <value>WriteMapNullValue</value>-->
+<!--                        <value>WriteDateUseDateFormat</value>-->
+<!--                    </array>-->
+<!--                </property>-->
+<!--            </bean>-->
+<!--        </mvc:message-converters>-->
+<!--    </mvc:annotation-driven>-->
+
+    <!--1.服务提供方在zookeeper中的“别名”-->
+    <dubbo:application name="edu-consumer"/>
+    <!--2.注册中心的地址-->
+    <dubbo:registry address="zookeeper://10.211.55.6:2181"/>
+    <!--3.扫描类（将什么包下的类作为消费类）-->
+<!--    <dubbo:annotation package="heying"/>-->
+
+    <dubbo:reference id="eduService" check="true" interface="heying.service.UserService"/>
+    <dubbo:reference id="eduCourseService" check="true" interface="heying.service.CourseService" />
+    <dubbo:reference id="eduOrderService" check="true" interface="heying.service.OrderService" />
+
+
+    <mvc:annotation-driven />
+    <mvc:default-servlet-handler/>
+
+</beans>

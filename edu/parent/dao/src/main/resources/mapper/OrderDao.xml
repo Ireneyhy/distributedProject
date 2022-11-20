@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.OrderDao">
+    <insert id="addOrder" parameterType="UserCourseOrder">
+        insert into user_course_order (order_no, user_id, course_id, activity_course_id, source_type, status, create_time, update_time, is_del)
+        VALUES (#{orderNo}, #{userId}, #{courseId}, #{activityCourseId}, #{sourceType}, #{status}, #{createTime}, #{updateTime}, #{isDel})
+    </insert>
+</mapper>

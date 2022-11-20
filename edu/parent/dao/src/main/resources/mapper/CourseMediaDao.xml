@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CourseMediaDao">
+
+    <resultMap type="entity.CourseMedia" id="CourseMediaMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+        <result property="sectionId" column="section_id" jdbcType="INTEGER"/>
+        <result property="lessonId" column="lesson_id" jdbcType="INTEGER"/>
+        <result property="channel" column="channel" jdbcType="INTEGER"/>
+        <result property="mediaType" column="media_type" jdbcType="INTEGER"/>
+        <result property="coverImageUrl" column="cover_image_url" jdbcType="VARCHAR"/>
+        <result property="duration" column="duration" jdbcType="VARCHAR"/>
+        <result property="fileId" column="file_id" jdbcType="VARCHAR"/>
+        <result property="fileUrl" column="file_url" jdbcType="VARCHAR"/>
+        <result property="fileEdk" column="file_edk" jdbcType="VARCHAR"/>
+        <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+        <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+        <result property="fileDk" column="file_dk" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+        <result property="lastOperatorId" column="last_operator_id" jdbcType="INTEGER"/>
+        <result property="durationNum" column="duration_num" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CourseMediaMap">
+        select
+          id, course_id, section_id, lesson_id, channel, media_type, cover_image_url, duration, file_id, file_url, file_edk, file_size, file_name, file_dk, create_time, update_time, status, is_del, last_operator_id, duration_num
+        from course_media
+        where  = #{}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CourseMediaMap">
+        select
+          id, course_id, section_id, lesson_id, channel, media_type, cover_image_url, duration, file_id, file_url, file_edk, file_size, file_name, file_dk, create_time, update_time, status, is_del, last_operator_id, duration_num
+        from course_media
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="courseId != null">
+                and course_id = #{courseId}
+            </if>
+            <if test="sectionId != null">
+                and section_id = #{sectionId}
+            </if>
+            <if test="lessonId != null">
+                and lesson_id = #{lessonId}
+            </if>
+            <if test="channel != null">
+                and channel = #{channel}
+            </if>
+            <if test="mediaType != null">
+                and media_type = #{mediaType}
+            </if>
+            <if test="coverImageUrl != null and coverImageUrl != ''">
+                and cover_image_url = #{coverImageUrl}
+            </if>
+            <if test="duration != null and duration != ''">
+                and duration = #{duration}
+            </if>
+            <if test="fileId != null and fileId != ''">
+                and file_id = #{fileId}
+            </if>
+            <if test="fileUrl != null and fileUrl != ''">
+                and file_url = #{fileUrl}
+            </if>
+            <if test="fileEdk != null and fileEdk != ''">
+                and file_edk = #{fileEdk}
+            </if>
+            <if test="fileSize != null">
+                and file_size = #{fileSize}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                and file_name = #{fileName}
+            </if>
+            <if test="fileDk != null and fileDk != ''">
+                and file_dk = #{fileDk}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="isDel != null">
+                and is_del = #{isDel}
+            </if>
+            <if test="lastOperatorId != null">
+                and last_operator_id = #{lastOperatorId}
+            </if>
+            <if test="durationNum != null">
+                and duration_num = #{durationNum}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from course_media
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="courseId != null">
+                and course_id = #{courseId}
+            </if>
+            <if test="sectionId != null">
+                and section_id = #{sectionId}
+            </if>
+            <if test="lessonId != null">
+                and lesson_id = #{lessonId}
+            </if>
+            <if test="channel != null">
+                and channel = #{channel}
+            </if>
+            <if test="mediaType != null">
+                and media_type = #{mediaType}
+            </if>
+            <if test="coverImageUrl != null and coverImageUrl != ''">
+                and cover_image_url = #{coverImageUrl}
+            </if>
+            <if test="duration != null and duration != ''">
+                and duration = #{duration}
+            </if>
+            <if test="fileId != null and fileId != ''">
+                and file_id = #{fileId}
+            </if>
+            <if test="fileUrl != null and fileUrl != ''">
+                and file_url = #{fileUrl}
+            </if>
+            <if test="fileEdk != null and fileEdk != ''">
+                and file_edk = #{fileEdk}
+            </if>
+            <if test="fileSize != null">
+                and file_size = #{fileSize}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                and file_name = #{fileName}
+            </if>
+            <if test="fileDk != null and fileDk != ''">
+                and file_dk = #{fileDk}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="isDel != null">
+                and is_del = #{isDel}
+            </if>
+            <if test="lastOperatorId != null">
+                and last_operator_id = #{lastOperatorId}
+            </if>
+            <if test="durationNum != null">
+                and duration_num = #{durationNum}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into course_media(id, course_id, section_id, lesson_id, channel, media_type, cover_image_url, duration, file_id, file_url, file_edk, file_size, file_name, file_dk, create_time, update_time, status, is_del, last_operator_id, duration_num)
+        values (#{id}, #{courseId}, #{sectionId}, #{lessonId}, #{channel}, #{mediaType}, #{coverImageUrl}, #{duration}, #{fileId}, #{fileUrl}, #{fileEdk}, #{fileSize}, #{fileName}, #{fileDk}, #{createTime}, #{updateTime}, #{status}, #{isDel}, #{lastOperatorId}, #{durationNum})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into course_media(id, course_id, section_id, lesson_id, channel, media_type, cover_image_url, duration, file_id, file_url, file_edk, file_size, file_name, file_dk, create_time, update_time, status, is_del, last_operator_id, duration_num)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.id}, #{entity.courseId}, #{entity.sectionId}, #{entity.lessonId}, #{entity.channel}, #{entity.mediaType}, #{entity.coverImageUrl}, #{entity.duration}, #{entity.fileId}, #{entity.fileUrl}, #{entity.fileEdk}, #{entity.fileSize}, #{entity.fileName}, #{entity.fileDk}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.isDel}, #{entity.lastOperatorId}, #{entity.durationNum})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into course_media(id, course_id, section_id, lesson_id, channel, media_type, cover_image_url, duration, file_id, file_url, file_edk, file_size, file_name, file_dk, create_time, update_time, status, is_del, last_operator_id, duration_num)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id}, #{entity.courseId}, #{entity.sectionId}, #{entity.lessonId}, #{entity.channel}, #{entity.mediaType}, #{entity.coverImageUrl}, #{entity.duration}, #{entity.fileId}, #{entity.fileUrl}, #{entity.fileEdk}, #{entity.fileSize}, #{entity.fileName}, #{entity.fileDk}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.isDel}, #{entity.lastOperatorId}, #{entity.durationNum})
+        </foreach>
+        on duplicate key update
+        id = values(id),
+        course_id = values(course_id),
+        section_id = values(section_id),
+        lesson_id = values(lesson_id),
+        channel = values(channel),
+        media_type = values(media_type),
+        cover_image_url = values(cover_image_url),
+        duration = values(duration),
+        file_id = values(file_id),
+        file_url = values(file_url),
+        file_edk = values(file_edk),
+        file_size = values(file_size),
+        file_name = values(file_name),
+        file_dk = values(file_dk),
+        create_time = values(create_time),
+        update_time = values(update_time),
+        status = values(status),
+        is_del = values(is_del),
+        last_operator_id = values(last_operator_id),
+        duration_num = values(duration_num)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update course_media
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="courseId != null">
+                course_id = #{courseId},
+            </if>
+            <if test="sectionId != null">
+                section_id = #{sectionId},
+            </if>
+            <if test="lessonId != null">
+                lesson_id = #{lessonId},
+            </if>
+            <if test="channel != null">
+                channel = #{channel},
+            </if>
+            <if test="mediaType != null">
+                media_type = #{mediaType},
+            </if>
+            <if test="coverImageUrl != null and coverImageUrl != ''">
+                cover_image_url = #{coverImageUrl},
+            </if>
+            <if test="duration != null and duration != ''">
+                duration = #{duration},
+            </if>
+            <if test="fileId != null and fileId != ''">
+                file_id = #{fileId},
+            </if>
+            <if test="fileUrl != null and fileUrl != ''">
+                file_url = #{fileUrl},
+            </if>
+            <if test="fileEdk != null and fileEdk != ''">
+                file_edk = #{fileEdk},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize},
+            </if>
+            <if test="fileName != null and fileName != ''">
+                file_name = #{fileName},
+            </if>
+            <if test="fileDk != null and fileDk != ''">
+                file_dk = #{fileDk},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel},
+            </if>
+            <if test="lastOperatorId != null">
+                last_operator_id = #{lastOperatorId},
+            </if>
+            <if test="durationNum != null">
+                duration_num = #{durationNum},
+            </if>
+        </set>
+        where  = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from course_media where  = #{}
+    </delete>
+
+</mapper>
+

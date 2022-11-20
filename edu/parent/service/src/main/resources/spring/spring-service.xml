@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder/>
+
+    <dubbo:application name="edu-provider"/>
+
+    <dubbo:registry address="zookeeper://10.211.55.6:2181"/>
+
+    <dubbo:provider token="true"/>
+
+    <bean id="eduService" class="heying.service.impl.UserServiceImpl"/>
+    <dubbo:service interface="heying.service.UserService" ref="eduService"/>
+
+    <bean id="eduCourseService" class="heying.service.impl.CourseServiceImpl"/>
+    <dubbo:service interface="heying.service.CourseService" ref="eduCourseService"/>
+
+    <bean id="eduOrderService" class="heying.service.impl.OrderServiceImpl"/>
+    <dubbo:service interface="heying.service.OrderService" ref="eduOrderService"/>
+
+    <import resource="classpath*:spring/spring-dao.xml" />
+
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" >
+        <constructor-arg name="standaloneConfig" ref="standaloneConfiguration" />
+<!--        <property name="hostName" value="10.211.55.6" />-->
+<!--        <property name="port" value="6379" />-->
+    </bean>
+
+    <bean id="standaloneConfiguration" class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+        <property name="hostName" value="10.211.55.6" />
+        <property name="port" value="6379" />
+<!--        <property name="database" value="" />-->
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connection-factory-ref="connectionFactory"/>
+
+
+</beans>
