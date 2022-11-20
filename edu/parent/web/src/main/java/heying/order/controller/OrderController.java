@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,5 +30,23 @@ public class OrderController {
         userCourseOrder.setCourseId(course_id);
         userCourseOrder.setActivityCourseId(activity_course_id);
         orderService.addOrder(userCourseOrder);
+    }
+
+    @GetMapping("updateOrder/{oid}/{status}")
+    public int updateOrder(@PathVariable("oid")String orderNo, @PathVariable("status")int status){
+
+        return orderService.updateOrder(orderNo, status);
+    }
+
+    @GetMapping("deleteOrder/{oid}")
+    public int deleteOrder(@PathVariable("oid")String orderNo){
+
+        return orderService.deleteOrder(orderNo);
+    }
+
+    @GetMapping("findOrder/{uid}")
+    public List<UserCourseOrder> findOrder(@PathVariable("uid")int userId){
+
+        return orderService.findOrder(userId);
     }
 }

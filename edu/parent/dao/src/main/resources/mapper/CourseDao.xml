@@ -101,6 +101,19 @@
         </collection>
     </resultMap>
 
+    <resultMap id="orderMap" type="UserCourseOrder">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+        <result property="activityCourseId" column="activity_course_id" jdbcType="INTEGER"/>
+        <result property="sourceType" column="source_type" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDel" column="is_del" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="queryAll" resultMap="CourseMap">
         select course.id, course.course_name, teacher_name, stock, course_section.section_name, course_lesson.theme, file_name
         from activity_course right join course on activity_course.course_id = course.id
@@ -111,6 +124,18 @@
         order by stock desc
     </select>
 
+    <update id="updateOrder">
+        update user_course_order set status = #{status} and update_time = #{updateTime} where order_no = #{orderNo} and
+                                                                                              is_del = 0
+    </update>
+
+    <update id="deleteOrder">
+        update user_course_order set is_del = 1 where order_no = #{orderNo}
+    </update>
+
+    <select id="findOrder" resultMap="orderMap">
+        select * from user_course_order where user_id = #{userId} and is_del = 0
+    </select>
 
 </mapper>
 
